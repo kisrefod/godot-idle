@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkti5j7361v4g"]
+
+[sub_resource type="GDScript" id="GDScript_l0yi2"]
+script/source = "extends Area2D
+
+var slider_speed = 100
+
+@export var gate_slider_path: NodePath;
+@onready var slider = get_node(gate_slider_path)
+
+enum directions {left, right};
+var direction = directions.right
+
+func move_to_wall(wall: directions) -> bool:
+	return false;
+
+func move() -> void:
+	if direction == directions.right and !move_to_wall(directions.right): #Если слайдер двигается вправо и НЕ сталкивается с правой стеной - двигаться вправо
+		position += Vector2(slider_speed, 0)
+		Transform2D
+	elif direction == directions.right and move_to_wall(directions.right): #Если слайдер двигается вправо и сталкивается со стеной - разворот
+		direction = directions.left
+	elif direction == directions.left and !move_to_wall(directions.left):
+		pass
+	elif direction == directions.left and move_to_wall(directions.left):
+		direction = directions.right
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fl7y"]
+
+[node name="gate-slider" type="Area2D"]
+script = SubResource("GDScript_l0yi2")
+gate_slider_path = NodePath(".")
+
+[node name="gate-collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0fl7y")
+
+[node name="Polygon2D" type="Polygon2D" parent="gate-collision"]
+color = Color(0.0823529, 0.792157, 0.215686, 1)
+polygon = PackedVector2Array(10, -10, 10, 10, -10, 10, -10, -10)

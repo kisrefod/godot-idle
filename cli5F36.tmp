@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr83ci6sk3aoe"]
+
+[ext_resource type="Script" path="res://clicker.gd" id="1_i8om1"]
+[ext_resource type="Script" path="res://energy_pipe.gd" id="2_ueajf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sktat"]
+size = Vector2(6, 6)
+
+[node name="clicker" type="Node2D"]
+position = Vector2(0, -2)
+script = ExtResource("1_i8om1")
+
+[node name="score" type="Label" parent="."]
+offset_left = 416.0
+offset_top = 107.0
+offset_right = 756.0
+offset_bottom = 304.0
+theme_override_constants/line_spacing = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="energy-pipe" type="Node2D" parent="."]
+script = ExtResource("2_ueajf")
+
+[node name="energy-btn" type="Button" parent="energy-pipe"]
+offset_left = 1036.0
+offset_top = 575.0
+offset_right = 1152.0
+offset_bottom = 650.0
+theme_override_font_sizes/font_size = 48
+text = "Click
+"
+
+[node name="close-btn" type="Button" parent="energy-pipe"]
+offset_left = 1036.0
+offset_right = 1152.0
+offset_bottom = 75.0
+theme_override_font_sizes/font_size = 48
+text = "X"
+
+[node name="pipe-rect" type="ColorRect" parent="energy-pipe"]
+offset_left = 1036.0
+offset_top = 75.0
+offset_right = 1152.0
+offset_bottom = 575.0
+
+[node name="left-gate-border2" type="ColorRect" parent="energy-pipe"]
+offset_left = 1146.0
+offset_top = 515.0
+offset_right = 1152.0
+offset_bottom = 575.0
+color = Color(0.976471, 1, 0.631373, 1)
+
+[node name="left-gate-border" type="ColorRect" parent="energy-pipe"]
+offset_left = 1036.0
+offset_top = 515.0
+offset_right = 1042.0
+offset_bottom = 575.0
+color = Color(0.976471, 1, 0.631373, 1)
+
+[node name="gate-slider" type="Area2D" parent="energy-pipe"]
+position = Vector2(1036, 515)
+
+[node name="gate-collision" type="CollisionShape2D" parent="energy-pipe/gate-slider"]
+position = Vector2(9, 30)
+shape = SubResource("RectangleShape2D_sktat")
+
+[node name="Polygon2D" type="Polygon2D" parent="energy-pipe/gate-slider/gate-collision"]
+position = Vector2(-1045, -572)
+color = Color(1, 0.901961, 0.0196078, 1)
+
+[connection signal="button_down" from="energy-pipe/energy-btn" to="energy-pipe" method="_on_energybtn_button_down"]
+[connection signal="button_up" from="energy-pipe/energy-btn" to="." method="_on_energybtn_button_up"]
+[connection signal="pressed" from="energy-pipe/energy-btn" to="." method="_on_click_pressed"]
+[connection signal="pressed" from="energy-pipe/close-btn" to="." method="_on_closebutton_pressed"]
