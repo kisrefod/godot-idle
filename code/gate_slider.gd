@@ -28,7 +28,6 @@ func energy_touch(area: Area2D) -> void:
 	area.queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
-	print("GS: ", area, "\tGS Name: ", self.name)
 	if area ==  bottom_wall:
 		direction = directions.up
 	elif area == top_wall:
